@@ -71,17 +71,63 @@ namespace LibraryManagementWPF
         }
         private void ButtonDeleteBook_Click(object sender, RoutedEventArgs e)
         {
-
+            int id = Convert.ToInt32(TextBoxIdBook.Text);
+            books.RemoveAll(b => b.ID == id);
+            UpdateBookList();
+            TextBoxIdBook.Text = string.Empty;
         }
 
         private void ButtonGiveOut_Click(object sender, RoutedEventArgs e)
         {
-
+            int id = Convert.ToInt32(TextBoxIdBook.Text);
+            var book = books.FirstOrDefault(b => b.ID == id);
+            if (book != null && book.IsIssued && book.Quantity == 1)
+            {
+                book.IsIssued = false;
+                book.Quantity--;
+                UpdateBookList();
+            }
+            else if (book != null && book.IsIssued && book.Quantity > 1)
+            {
+                book.Quantity--;
+                UpdateBookList();
+            }
+            TextBoxIdBook.Text = string.Empty;
         }
 
         private void ButtonRerutnBook_Click(object sender, RoutedEventArgs e)
         {
-
+            int id = Convert.ToInt32(TextBoxIdBook.Text);
+            var book = books.FirstOrDefault(b => b.ID == id);
+            if (book != null && book.IsIssued && book.Quantity > 0)
+            {
+                book.Quantity++;
+                UpdateBookList();
+            }
+            else if (book != null && !book.IsIssued && book.Quantity == 0)
+            {
+                book.IsIssued = true;
+                book.Quantity++;
+                UpdateBookList();
+            }
+            TextBoxIdBook.Text = string.Empty;
+        }
+        private void LoadBooks()
+        {
+            try
+            {
+                string filePath = "BooksDataFile.json"; 
+                if (File.Exists(filePath))
+                {
+                    string json = File.ReadAllText(filePath);
+                    books = JsonSerializer.Deserialize<List<Book>>(json);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            UpdateBookList();
         }
         private void SaveBooks()
         {
@@ -99,6 +145,7 @@ namespace LibraryManagementWPF
 
         private void UpdateBookList()
         {
+            BookListView.ItemsSource = null;
             BookListView.ItemsSource = books;
         }
         private void ClearInputFields()
@@ -108,6 +155,16 @@ namespace LibraryManagementWPF
             TextBoxAuthor.Text = string.Empty;
             TextBoxYear.Text = string.Empty;
             TextBoxQuantity.Text = string.Empty;
+        }
+
+        private void ButtonLoadBooks_Click(object sender, RoutedEventArgs e)
+        {
+            LoadBooks();
+        }
+
+        private void ButtonSaveBooks_Click(object sender, RoutedEventArgs e)
+        {
+            SaveBooks();    
         }
     }
 }

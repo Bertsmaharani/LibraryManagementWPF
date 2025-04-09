@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManagementWPF"
         mc:Ignorable="d"
-        Title="Библиотека им. Ф.М. Достоевского" Height="450" Width="800">
+        Title="Библиотека им. Ф.М. Достоевского" Height="600" Width="810">
     <Grid>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="71,67,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Height="30" Width="100"/>
-        <Button Content="Удалить" HorizontalAlignment="Left" Margin="71,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Click="Button_Click" Height="30" Width="100"/>
-        <Button Content="Выдать" HorizontalAlignment="Left" Margin="71,168,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Click="Button_Click" Height="30" Width="100"/>
-        <Button Content="Вернуть" HorizontalAlignment="Left" Margin="71,217,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Click="Button_Click" Height="30" Width="100"/>
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="71,67,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Height="30" Width="100" Click="ButtonAddBook_Click"/>
+        <Button Content="Удалить" HorizontalAlignment="Left" Margin="71,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Click="ButtonDeleteBook_Click" Height="30" Width="100"/>
+        <Button Content="Выдать" HorizontalAlignment="Left" Margin="71,168,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Click="ButtonGiveOut_Click" Height="30" Width="100"/>
+        <Button Content="Вернуть" HorizontalAlignment="Left" Margin="71,217,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Click="ButtonRerutnBook_Click" Height="30" Width="100"/>
         <Label Content="Id книги" HorizontalAlignment="Left" Margin="270,67,0,0" VerticalAlignment="Top"/>
         <Label Content="Название" HorizontalAlignment="Left" Margin="451,67,0,0" VerticalAlignment="Top"/>
         <Label Content="Автор" HorizontalAlignment="Left" Margin="650,67,0,0" VerticalAlignment="Top"/>
@@ -26,17 +26,19 @@
         <TextBox HorizontalAlignment="Left" Margin="238,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxYear"/>
         <TextBox HorizontalAlignment="Left" Margin="611,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxAuthor"/>
         <TextBox HorizontalAlignment="Left" Margin="612,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxQuantity"/>
-        <ListView x:Name="BookListView"
-            ItemsSource="{Binding MyItems}" Margin="0,272,0,0">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding ImagePath}" Width="50" Height="50"/>
-                        <TextBlock Text="{Binding Name}"/>
-                        <TextBlock Text="{Binding Description}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+        <ListView x:Name="BookListView" Margin="0,272,0,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" />
+                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Title}" />
+                    <GridViewColumn Header="Автор" DisplayMemberBinding="{Binding Author}" />
+                    <GridViewColumn Header="Год издания" DisplayMemberBinding="{Binding Year}" />
+                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding IsIssued}" />
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Quantity}" />
+                </GridView>
+            </ListView.View>
         </ListView>
+        <Button Content="Загрузить данные из файла" HorizontalAlignment="Left" Margin="298,243,0,0" VerticalAlignment="Top" Name ="ButtonLoadBooks" Click="ButtonLoadBooks_Click"/>
+        <Button Content="Сохранить данные в файл" HorizontalAlignment="Left" Margin="525,243,0,0" VerticalAlignment="Top" Name ="ButtonSaveBooks" Click="ButtonSaveBooks_Click"/>
     </Grid>
 </Window>
