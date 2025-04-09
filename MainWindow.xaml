@@ -5,19 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManagementWPF"
         mc:Ignorable="d"
-        Title="Библиотека им. Ф.М. Достоевского" Height="600" Width="810">
+        Title="Библиотека им. Ф.М. Достоевского" Height="600" Width="810" Background ="White">
     <Grid>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="71,67,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Height="30" Width="100" Click="ButtonAddBook_Click"/>
-        <Button Content="Удалить" HorizontalAlignment="Left" Margin="71,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Click="ButtonDeleteBook_Click" Height="30" Width="100"/>
-        <Button Content="Выдать" HorizontalAlignment="Left" Margin="71,168,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Click="ButtonGiveOut_Click" Height="30" Width="100"/>
-        <Button Content="Вернуть" HorizontalAlignment="Left" Margin="71,217,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.174,-0.549" Click="ButtonRerutnBook_Click" Height="30" Width="100"/>
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="71,67,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-1.174,-0.549" Height="30" Width="100" Click="ButtonAddBook_Click" Background="LightSteelBlue"/>
+        <Button Content="Удалить" HorizontalAlignment="Left" Margin="71,118,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-1.174,-0.549" Click="ButtonDeleteBook_Click" Height="30" Width="100" Background="LightSteelBlue"/>
+        <Button Content="Выдать" HorizontalAlignment="Left" Margin="71,168,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-1.174,-0.549" Click="ButtonGiveOut_Click" Height="30" Width="100" Background="LightSteelBlue"/>
+        <Button Content="Вернуть" HorizontalAlignment="Left" Margin="71,217,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-1.174,-0.549" Click="ButtonRerutnBook_Click" Height="30" Width="100" Background="LightSteelBlue"/>
         <Label Content="Id книги" HorizontalAlignment="Left" Margin="270,67,0,0" VerticalAlignment="Top"/>
         <Label Content="Название" HorizontalAlignment="Left" Margin="451,67,0,0" VerticalAlignment="Top"/>
         <Label Content="Автор" HorizontalAlignment="Left" Margin="650,67,0,0" VerticalAlignment="Top"/>
         <Label Content="Год издания" HorizontalAlignment="Left" Margin="259,155,0,0" VerticalAlignment="Top"/>
         <Label Content="Статус" HorizontalAlignment="Left" Margin="460,154,0,0" VerticalAlignment="Top"/>
         <Label Content="Количество" HorizontalAlignment="Left" Margin="634,155,0,0" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="422,190,0,0" VerticalAlignment="Top" Width="120" Name ="ComboBoxStatus">
+        <ComboBox HorizontalAlignment="Left" Margin="422,190,0,0" VerticalAlignment="Top" Width="120" Background ="White" Name ="ComboBoxStatus">
             <ComboBoxItem Content ="Доступна"/>
             <ComboBoxItem Content ="Не доступна"/>
         </ComboBox>
@@ -29,16 +33,18 @@
         <ListView x:Name="BookListView" Margin="0,272,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" />
-                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Title}" />
-                    <GridViewColumn Header="Автор" DisplayMemberBinding="{Binding Author}" />
-                    <GridViewColumn Header="Год издания" DisplayMemberBinding="{Binding Year}" />
-                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding IsIssued}" />
-                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Quantity}" />
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="50"/>
+                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Title}" Width="100"/>
+                    <GridViewColumn Header="Автор" DisplayMemberBinding="{Binding Author}" Width="100"/>
+                    <GridViewColumn Header="Год издания" DisplayMemberBinding="{Binding Year}" Width="100"/>
+                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding IsIssued}" Width="100"/>
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Загрузить данные из файла" HorizontalAlignment="Left" Margin="298,243,0,0" VerticalAlignment="Top" Name ="ButtonLoadBooks" Click="ButtonLoadBooks_Click"/>
-        <Button Content="Сохранить данные в файл" HorizontalAlignment="Left" Margin="525,243,0,0" VerticalAlignment="Top" Name ="ButtonSaveBooks" Click="ButtonSaveBooks_Click"/>
+        <Button Content="Загрузить данные из файла" HorizontalAlignment="Left" Margin="298,243,0,0" 
+                VerticalAlignment="Top" Name ="ButtonLoadBooks" Click="ButtonLoadBooks_Click" Background="LightSteelBlue"/>
+        <Button Content="Сохранить данные в файл" HorizontalAlignment="Left" Margin="525,243,0,0" 
+                VerticalAlignment="Top" Name ="ButtonSaveBooks" Click="ButtonSaveBooks_Click" Background="LightSteelBlue"/>
     </Grid>
 </Window>
