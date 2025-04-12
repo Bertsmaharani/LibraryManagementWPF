@@ -71,46 +71,79 @@ namespace LibraryManagementWPF
         }
         private void ButtonDeleteBook_Click(object sender, RoutedEventArgs e)
         {
-            int id = Convert.ToInt32(TextBoxIdBook.Text);
-            books.RemoveAll(b => b.ID == id);
-            UpdateBookList();
-            TextBoxIdBook.Text = string.Empty;
+            try
+            {
+                if (string.IsNullOrEmpty(TextBoxIdBook.Text))
+                {
+                    throw new Exception("Поле Id книги обязательно для заполнения!");
+                }
+                int id = Convert.ToInt32(TextBoxIdBook.Text);
+                books.RemoveAll(b => b.ID == id);
+                UpdateBookList();
+                TextBoxIdBook.Text = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ButtonGiveOut_Click(object sender, RoutedEventArgs e)
         {
-            int id = Convert.ToInt32(TextBoxIdBook.Text);
-            var book = books.FirstOrDefault(b => b.ID == id);
-            if (book != null && book.IsIssued && book.Quantity == 1)
+            try
             {
-                book.IsIssued = false;
-                book.Quantity--;
-                UpdateBookList();
+                if (string.IsNullOrEmpty(TextBoxIdBook.Text))
+                {
+                    throw new Exception("Поле Id книги обязательно для заполнения!");
+                }
+                int id = Convert.ToInt32(TextBoxIdBook.Text);
+                var book = books.FirstOrDefault(b => b.ID == id);
+                if (book != null && book.IsIssued && book.Quantity == 1)
+                {
+                    book.IsIssued = false;
+                    book.Quantity--;
+                    UpdateBookList();
+                }
+                else if (book != null && book.IsIssued && book.Quantity > 1)
+                {
+                    book.Quantity--;
+                    UpdateBookList();
+                }
+                TextBoxIdBook.Text = string.Empty;
             }
-            else if (book != null && book.IsIssued && book.Quantity > 1)
+            catch (Exception ex)
             {
-                book.Quantity--;
-                UpdateBookList();
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            TextBoxIdBook.Text = string.Empty;
         }
 
         private void ButtonRerutnBook_Click(object sender, RoutedEventArgs e)
         {
-            int id = Convert.ToInt32(TextBoxIdBook.Text);
-            var book = books.FirstOrDefault(b => b.ID == id);
-            if (book != null && book.IsIssued && book.Quantity > 0)
+            try
             {
-                book.Quantity++;
-                UpdateBookList();
+                if (string.IsNullOrEmpty(TextBoxIdBook.Text))
+                {
+                    throw new Exception("Поле Id книги обязательно для заполнения!");
+                }
+                int id = Convert.ToInt32(TextBoxIdBook.Text);
+                var book = books.FirstOrDefault(b => b.ID == id);
+                if (book != null && book.IsIssued && book.Quantity > 0)
+                {
+                    book.Quantity++;
+                    UpdateBookList();
+                }
+                else if (book != null && !book.IsIssued && book.Quantity == 0)
+                {
+                    book.IsIssued = true;
+                    book.Quantity++;
+                    UpdateBookList();
+                }
+                TextBoxIdBook.Text = string.Empty;
             }
-            else if (book != null && !book.IsIssued && book.Quantity == 0)
+            catch (Exception ex)
             {
-                book.IsIssued = true;
-                book.Quantity++;
-                UpdateBookList();
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            TextBoxIdBook.Text = string.Empty;
         }
         private void LoadBooks()
         {
