@@ -116,7 +116,6 @@ namespace LibraryManagementWPF
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void ButtonRerutnBook_Click(object sender, RoutedEventArgs e)
         {
             try
