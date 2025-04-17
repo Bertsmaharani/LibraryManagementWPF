@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LibraryManagementWPF"
         xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title ="Библиотека им. Ф.Ь. Достоевского" Height="650" Width="1200" Background="#ece6ff"
+        Title ="Библиотека им. Ф.М. Достоевского" Height="650" Width="1200" Background="#ece6ff"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" >
     <Grid>
         <Button Content="Добавить" HorizontalAlignment="Left" Margin="71,70,0,0" VerticalAlignment="Top" 
