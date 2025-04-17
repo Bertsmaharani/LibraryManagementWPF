@@ -4,77 +4,90 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManagementWPF"
+        xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Библиотека им. Ф.М. Достоевского" Height="600" Width="810" Background ="White">
+        Title ="Библиотека им. Ф.Ь. Достоевского" Height="650" Width="1200" Background="#ece6ff"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" >
     <Grid>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="71,67,0,0" VerticalAlignment="Top" 
-                RenderTransformOrigin="-1.174,-0.549" Height="30" Width="100" Click="ButtonAddBook_Click" Background="LightSteelBlue"/>
-        <Button Content="Удалить" HorizontalAlignment="Left" Margin="71,118,0,0" VerticalAlignment="Top" 
-                RenderTransformOrigin="-1.174,-0.549" Click="ButtonDeleteBook_Click" Height="30" Width="100" Background="LightSteelBlue"/>
-        <Button Content="Выдать" HorizontalAlignment="Left" Margin="71,168,0,0" VerticalAlignment="Top" 
-                RenderTransformOrigin="-1.174,-0.549" Click="ButtonGiveOut_Click" Height="30" Width="100" Background="LightSteelBlue"/>
-        <Button Content="Вернуть" HorizontalAlignment="Left" Margin="71,217,0,0" VerticalAlignment="Top" 
-                RenderTransformOrigin="-1.174,-0.549" Click="ButtonRerutnBook_Click" Height="30" Width="100" Background="LightSteelBlue"/>
-        <Label Content="Id книги" HorizontalAlignment="Left" Margin="270,67,0,0" VerticalAlignment="Top"/>
-        <Label Content="Название" HorizontalAlignment="Left" Margin="451,67,0,0" VerticalAlignment="Top"/>
-        <Label Content="Автор" HorizontalAlignment="Left" Margin="650,67,0,0" VerticalAlignment="Top"/>
-        <Label Content="Год издания" HorizontalAlignment="Left" Margin="259,155,0,0" VerticalAlignment="Top"/>
-        <Label Content="Статус" HorizontalAlignment="Left" Margin="460,154,0,0" VerticalAlignment="Top"/>
-        <Label Content="Количество" HorizontalAlignment="Left" Margin="634,155,0,0" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="422,190,0,0" VerticalAlignment="Top" Width="120" Background ="White" Name ="ComboBoxStatus">
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="71,70,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-1.174,-0.549" Height="30" Width="100" Click="ButtonAddBook_Click" 
+                Foreground="#160066" Background="#d7ccff"/>
+        <Button Content="Удалить" HorizontalAlignment="Left" Margin="71,158,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-1.174,-0.549" Click="ButtonDeleteBook_Click" Height="30" Width="100" 
+                Foreground="#160066" Background="#d7ccff"/>
+        <Button Content="Выдать" HorizontalAlignment="Left" Margin="71,241,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-1.174,-0.549" Click="ButtonGiveOut_Click" Height="30" Width="100" 
+                Foreground="#160066" Background="#d7ccff"/>
+        <Button Content="Вернуть" HorizontalAlignment="Left" Margin="71,325,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-1.174,-0.549" Click="ButtonRerutnBook_Click" Height="30" Width="100" 
+                Foreground="#160066" Background="#d7ccff"/>
+        <Label Content="Id книги" HorizontalAlignment="Left" Margin="270,67,0,0" VerticalAlignment="Top" Foreground="#160066"/>
+        <Label Content="Название" HorizontalAlignment="Left" Margin="510,62,0,0" VerticalAlignment="Top" Foreground="#160066"/>
+        <Label Content="Автор" HorizontalAlignment="Left" Margin="746,62,0,0" VerticalAlignment="Top" 
+               RenderTransformOrigin="1.748,0.501" Foreground="#160066"/>
+        <Label Content="Год издания" HorizontalAlignment="Left" Margin="260,215,0,0" VerticalAlignment="Top" Foreground="#160066"/>
+        <Label Content="Статус" HorizontalAlignment="Left" Margin="519,215,0,0" VerticalAlignment="Top" Foreground="#160066"/>
+        <Label Content="Количество" HorizontalAlignment="Left" Margin="731,215,0,0" VerticalAlignment="Top" Foreground="#160066"/>
+        <ComboBox HorizontalAlignment="Left" Margin="480,274,0,0" VerticalAlignment="Top" Width="120" Background ="White" 
+                  Foreground="#160066" Name ="ComboBoxStatus">
             <ComboBoxItem Content ="Доступна"/>
             <ComboBoxItem Content ="Не доступна"/>
         </ComboBox>
-        <TextBox HorizontalAlignment="Left" Margin="237,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxIdBook"/>
-        <TextBox HorizontalAlignment="Left" Margin="422,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxTitle"/>
-        <TextBox HorizontalAlignment="Left" Margin="238,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxYear"/>
-        <TextBox HorizontalAlignment="Left" Margin="611,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxAuthor"/>
-        <TextBox HorizontalAlignment="Left" Margin="612,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxQuantity"/>
-        <ListView x:Name="BookListView" Margin="0,272,0,0">
+        <TextBox HorizontalAlignment="Left" Margin="238,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxIdBook" Background="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="480,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxTitle" Background="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="238,274,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxYear" Background="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="707,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxAuthor" Background="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="707,274,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name ="TextBoxQuantity" Background="White"/>
+        <ListView x:Name="BookListView" Margin="0,397,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="50"/>
-                    <GridViewColumn Header="Название" Width="100">
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="100"/>
+                    <GridViewColumn Header="Название" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Автор" Width="100">
+                    <GridViewColumn Header="Автор" Width="300">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Год издания" Width="100">
+                    <GridViewColumn Header="Год издания" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Статус" Width="100">
+                    <GridViewColumn Header="Статус" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding IsIssued, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Text="{Binding IsIssued, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Количество" Width="100">
+                    <GridViewColumn Header="Количество" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Загрузить данные из файла" HorizontalAlignment="Left" Margin="298,243,0,0" 
-                VerticalAlignment="Top" Name ="ButtonLoadBooks" Click="ButtonLoadBooks_Click" Background="LightSteelBlue"/>
-        <Button Content="Сохранить данные в файл" HorizontalAlignment="Left" Margin="525,243,0,0" 
-                VerticalAlignment="Top" Name ="ButtonSaveBooks" Click="ButtonSaveBooks_Click" Background="LightSteelBlue"/>
+        <Button Content="Загрузить данные из файла" HorizontalAlignment="Left" Margin="901,106,0,0" 
+                VerticalAlignment="Top" Name ="ButtonLoadBooks" Click="ButtonLoadBooks_Click" 
+                Foreground="#160066" Background="#d7ccff" Height="30"/>
+        <Button Content="Сохранить данные в файл" HorizontalAlignment="Left" Margin="901,274,0,0" 
+                VerticalAlignment="Top" Name ="ButtonSaveBooks" Click="ButtonSaveBooks_Click" 
+                Foreground="#160066" Background="#d7ccff" Height="30" Width="214" RenderTransformOrigin="0.51,0.433"/>
+        <Button Content="Выход" HorizontalAlignment="Left" Margin="1116,10,0,0" 
+                VerticalAlignment="Top" Name ="ButtonExit" Click="ButtonExit_Click" 
+                Foreground="#160066" Background="#d7ccff" Height="30"/>
     </Grid>
 </Window>
