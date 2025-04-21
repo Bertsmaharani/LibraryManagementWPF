@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Text.Json;
 using System.IO;
+using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace LibraryManagementWPF
 {
@@ -29,6 +21,7 @@ namespace LibraryManagementWPF
             DataContext = this;
         }
         public List<Book> books = new List<Book>();
+        private string FilePath;
         private void ButtonAddBook_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -37,7 +30,7 @@ namespace LibraryManagementWPF
                 string.IsNullOrEmpty(TextBoxYear.Text) || string.IsNullOrEmpty(TextBoxQuantity.Text) ||
                 string.IsNullOrEmpty(TextBoxAuthor.Text) || string.IsNullOrEmpty(ComboBoxStatus.Text))
                 {
-                    MessageBox.Show("Все поля должны быть заполнены!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show("Все поля должны быть заполнены!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return; 
                 }
 
@@ -61,13 +54,14 @@ namespace LibraryManagementWPF
             }
             catch (FormatException ex)
             {
-                MessageBox.Show($"Ошибка при вводе: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Ошибка при вводе: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             UpdateBookList();
+            SaveBooks();
         }
         private void ButtonDeleteBook_Click(object sender, RoutedEventArgs e)
         {
@@ -80,11 +74,12 @@ namespace LibraryManagementWPF
                 int id = Convert.ToInt32(TextBoxIdBook.Text);
                 books.RemoveAll(b => b.ID == id);
                 UpdateBookList();
+                SaveBooks();
                 TextBoxIdBook.Text = string.Empty;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -110,13 +105,14 @@ namespace LibraryManagementWPF
                     UpdateBookList();
                 }
                 TextBoxIdBook.Text = string.Empty;
+                SaveBooks();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void ButtonRerutnBook_Click(object sender, RoutedEventArgs e)
+        private void ButtonReturnBook_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -138,40 +134,39 @@ namespace LibraryManagementWPF
                     UpdateBookList();
                 }
                 TextBoxIdBook.Text = string.Empty;
+                SaveBooks();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void LoadBooks()
         {
             try
-            {
-                string filePath = "BooksDataFile.json"; 
-                if (File.Exists(filePath))
+            { 
+                if (File.Exists(FilePath) && FilePath.Length != 0)
                 {
-                    string json = File.ReadAllText(filePath);
+                    string json = File.ReadAllText(FilePath);
                     books = JsonSerializer.Deserialize<List<Book>>(json);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Ошибка при загрузке: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             UpdateBookList();
         }
         private void SaveBooks()
         {
-            string filePath = "BooksDataFile.json"; 
             try
             {
                 string json = JsonSerializer.Serialize<List<Book>>(books, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(filePath, json);
+                File.WriteAllText(FilePath, json);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -202,6 +197,34 @@ namespace LibraryManagementWPF
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void ButtonSelectFile_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Title = "Выбор файла",
+                Filter = "Все файлы (*.*)|*.*"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                System.Windows.MessageBox.Show("Выбранный файл: " + openFileDialog.FileName);
+            }
+        }
+
+        private void ButtonSelectPath_Click(object sender, RoutedEventArgs e)
+        {
+            using (System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                folderBrowserDialog.Description = "Выберите папку";
+
+                if (folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    FilePath = folderBrowserDialog.SelectedPath; 
+                    System.Windows.MessageBox.Show("Выбранная папка: " + folderBrowserDialog.SelectedPath);
+                }
+            }
         }
     }
 }
