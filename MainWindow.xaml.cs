@@ -6,6 +6,8 @@ using System.Text.Json;
 using System.IO;
 using Microsoft.Win32;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
 
 namespace LibraryManagementWPF
 {
@@ -45,7 +47,8 @@ namespace LibraryManagementWPF
                     Author = TextBoxAuthor.Text,
                     Year = year,
                     Quantity = quantity,
-                    IsIssued = ComboBoxStatus.Text == "Доступна"
+                    IsIssued = ComboBoxStatus.Text == "Доступна",
+                    MaxQuantity = quantity
                 };
                 books.Add(book);
                 SaveBooks(); 
@@ -75,7 +78,7 @@ namespace LibraryManagementWPF
                 books.RemoveAll(b => b.ID == id);
                 UpdateBookList();
                 SaveBooks();
-                TextBoxIdBook.Text = string.Empty;
+                ClearInputFields();
             }
             catch (Exception ex)
             {
@@ -104,8 +107,8 @@ namespace LibraryManagementWPF
                     book.Quantity--;
                     UpdateBookList();
                 }
-                TextBoxIdBook.Text = string.Empty;
-                SaveBooks();
+                    SaveBooks();
+                ClearInputFields();
             }
             catch (Exception ex)
             {
@@ -122,19 +125,23 @@ namespace LibraryManagementWPF
                 }
                 int id = Convert.ToInt32(TextBoxIdBook.Text);
                 var book = books.FirstOrDefault(b => b.ID == id);
-                if (book != null && book.IsIssued && book.Quantity > 0)
+                if (book != null && book.IsIssued && book.Quantity > 0 && book.Quantity < book.MaxQuantity)
                 {
                     book.Quantity++;
                     UpdateBookList();
                 }
-                else if (book != null && !book.IsIssued && book.Quantity == 0)
+                else if (book != null && !book.IsIssued && book.Quantity == 0 && book.Quantity < book.MaxQuantity)
                 {
                     book.IsIssued = true;
                     book.Quantity++;
                     UpdateBookList();
                 }
-                TextBoxIdBook.Text = string.Empty;
+                else if(book.Quantity == book.MaxQuantity)
+                {
+                    throw new Exception("Книга не может быть вовзращена, потому что достигнуто максимальное количество!");
+                }
                 SaveBooks();
+                ClearInputFields();
             }
             catch (Exception ex)
             {
@@ -209,6 +216,7 @@ namespace LibraryManagementWPF
 
             if (openFileDialog.ShowDialog() == true)
             {
+                FilePath = openFileDialog.FileName;
                 System.Windows.MessageBox.Show("Выбранный файл: " + openFileDialog.FileName);
             }
         }
@@ -224,6 +232,59 @@ namespace LibraryManagementWPF
                     FilePath = folderBrowserDialog.SelectedPath; 
                     System.Windows.MessageBox.Show("Выбранная папка: " + folderBrowserDialog.SelectedPath);
                 }
+            }
+        }
+        private void TextBox_PreviewIdInput(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+"); 
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void TextBox_PreviewAuthorInput(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^а-яА-Я]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void TextBox_PreviewYearInput(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+"); 
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void TextBox_PreviewQntInput(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+"); 
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void BookListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (BookListView.SelectedItem is Book selectedItem)
+            {
+                TextBoxIdBook.Text = selectedItem.ID.ToString();
+                TextBoxTitle.Text = selectedItem.Title;
+                TextBoxAuthor.Text = selectedItem.Author;
+                TextBoxYear.Text = selectedItem.Year.ToString();
+                if (selectedItem.IsIssued == true)
+                {
+                    ComboBoxStatus.Text = "Доступна";
+                }
+                else
+                {
+                    ComboBoxStatus.Text = "Не доступна";
+                }
+                TextBoxQuantity.Text = selectedItem.Quantity.ToString();
+            }
+        }
+
+        private void ButtonEditBook_Click(object sender, RoutedEventArgs e)
+        {
+            if (BookListView.SelectedItem is Book selectedItem)
+            {
+                selectedItem.ID = Convert.ToInt32(TextBoxIdBook.Text);
+                selectedItem.Title = TextBoxTitle.Text;
+                selectedItem.Author = TextBoxAuthor.Text;
+                selectedItem.Year = Convert.ToInt32(TextBoxYear.Text);
+                selectedItem.IsIssued = Convert.ToBoolean(ComboBoxStatus);
+                selectedItem.Quantity = Convert.ToInt32(TextBoxQuantity.Text);
+                BookListView.Items.Refresh();
             }
         }
     }
