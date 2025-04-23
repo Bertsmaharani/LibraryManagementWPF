@@ -71,5 +71,6 @@
     RenderTransformOrigin="-1.174,-0.549" Height="30" Width="214" Click="ButtonSelectPath_Click" 
     Foreground="#160066" Background="#d7ccff"/>
         <Button Content="Редактировать" HorizontalAlignment="Left" Margin="519,340,0,0" VerticalAlignment="Top" Width="133" Name="ButtonEditBook" Click="ButtonEditBook_Click"/>
+        <Frame x:Name="MainFrame" Source="Authentification.xaml" Margin="0, 0, 0, 0" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

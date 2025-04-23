@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LibraryManagementWPF
@@ -17,13 +18,12 @@ namespace LibraryManagementWPF
     /// <summary>
     /// Логика взаимодействия для Authentification.xaml
     /// </summary>
-    public partial class Authentification : Window
+    public partial class Authentification : Page
     {
         public Authentification()
         {
             InitializeComponent();
         }
-
         private void ButtonEnterAuthorization_Click(object sender, RoutedEventArgs e)
         {
             string username = TextBoxLogin.Text;
@@ -31,13 +31,12 @@ namespace LibraryManagementWPF
 
             if (IsCredentialsValid(username, password))
             {
-                DialogResult = true; // Успешная авторизация
-                Close();
+                MessageBox.Show("Добро пожаловать!");
+                Content = null;
             }
             else
             {
                 MessageBox.Show("Неверный логин или пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                DialogResult = false; // Неуспешная авторизация
             }
         }
         private bool IsCredentialsValid(string username, string password)
