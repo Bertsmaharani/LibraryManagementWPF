@@ -41,7 +41,7 @@ namespace LibraryManagementWPF
         }
         private bool IsCredentialsValid(string username, string password)
         {
-            return username == "dasha" && password == "pass";
+            return username == "bertsmaharani" && password == "162738DK";
         }
     }
 }
