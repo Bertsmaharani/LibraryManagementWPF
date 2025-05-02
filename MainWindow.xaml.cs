@@ -8,6 +8,7 @@ using Microsoft.Win32;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace LibraryManagementWPF
 {
@@ -43,7 +44,7 @@ namespace LibraryManagementWPF
                     Author = TextBoxAuthor.Text,
                     Year = year,
                     IsIssued = ComboBoxStatus.Text == "Доступна",
-                    NameReader = TextBoxNameReader.Text
+                    NameReader = TextBoxNameReader.Text,
                 };
                 books.Add(book);
                 SaveBooks(); 
@@ -89,10 +90,10 @@ namespace LibraryManagementWPF
                     throw new Exception("Поля Id книги и ФИО обязательно для заполнения!");
                 }
                 int id = Convert.ToInt32(TextBoxIdBook.Text);
-                string name = Convert.ToString(TextBoxNameReader.Text);
                 var book = books.FirstOrDefault(b => b.ID == id);
                 if (book != null && book.IsIssued)
                 {
+                    book.NameReader = TextBoxNameReader.Text;
                     book.IsIssued = false;
                     UpdateBookList();
                 }
@@ -120,6 +121,7 @@ namespace LibraryManagementWPF
                 var book = books.FirstOrDefault(b => b.ID == id);
                 if (book != null && !book.IsIssued)
                 {
+                    book.NameReader = "-";
                     book.IsIssued = true;
                     UpdateBookList();
                 }
@@ -188,7 +190,6 @@ namespace LibraryManagementWPF
                 System.Windows.MessageBox.Show($"Ошибка при загрузке: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void ButtonSaveBooks_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -203,6 +204,7 @@ namespace LibraryManagementWPF
 
                 if (saveFileDialog.ShowDialog() == true)
                 {
+                    FilePath = saveFileDialog.FileName;
                     string json = JsonSerializer.Serialize<List<Book>>(books, new JsonSerializerOptions { WriteIndented = true });
                     File.WriteAllText(saveFileDialog.FileName, json);
                 }
@@ -234,7 +236,7 @@ namespace LibraryManagementWPF
         }
         private void TextBox_PreviewReaderNameInput(object sender, TextCompositionEventArgs e)
         {
-            var regex = new Regex("[^а-яА-ЯЁёa-zA-Z]+");
+            var regex = new Regex("[^а-яА-ЯЁёa-zA-Z-]+");
             e.Handled = regex.IsMatch(e.Text);
         }
         private void BookListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

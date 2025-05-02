@@ -9,16 +9,16 @@
         Title ="Библиотека им. Ф.М. Достоевского" Height="650" Width="1200" Background="#ece6ff"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" >
     <Grid>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="60,148,0,0" VerticalAlignment="Top" 
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="60,79,0,0" VerticalAlignment="Top" 
                 RenderTransformOrigin="-1.174,-0.549" Height="30" Width="100" Click="ButtonAddBook_Click" 
                 Foreground="#160066" Background="#d7ccff"/>
-        <Button Content="Удалить" HorizontalAlignment="Left" Margin="60,278,0,0" VerticalAlignment="Top" 
+        <Button Content="Удалить" HorizontalAlignment="Left" Margin="60,141,0,0" VerticalAlignment="Top" 
                 RenderTransformOrigin="-1.174,-0.549" Click="ButtonDeleteBook_Click" Height="30" Width="100" 
                 Foreground="#160066" Background="#d7ccff"/>
-        <Button Content="Выдать" HorizontalAlignment="Left" Margin="60,78,0,0" VerticalAlignment="Top" 
+        <Button Content="Выдать" HorizontalAlignment="Left" Margin="60,209,0,0" VerticalAlignment="Top" 
                 RenderTransformOrigin="-1.174,-0.549" Click="ButtonGiveOut_Click" Height="30" Width="100" 
                 Foreground="#160066" Background="#d7ccff"/>
-        <Button Content="Вернуть" HorizontalAlignment="Left" Margin="60,215,0,0" VerticalAlignment="Top" 
+        <Button Content="Вернуть" HorizontalAlignment="Left" Margin="60,269,0,0" VerticalAlignment="Top" 
                 RenderTransformOrigin="-1.174,-0.549" Click="ButtonReturnBook_Click" Height="30" Width="100" 
                 Foreground="#160066" Background="#d7ccff"/>
         <Label Content="Id книги" HorizontalAlignment="Left" Margin="270,67,0,0" VerticalAlignment="Top" Foreground="#160066"/>
@@ -44,12 +44,11 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="100"/>
-                    <GridViewColumn Header="Название" DisplayMemberBinding = "{Binding Title}" Width="200"/>
-                    <GridViewColumn Header="Автор" Width="250" DisplayMemberBinding = "{Binding Author}"/>
+                    <GridViewColumn Header="Название" DisplayMemberBinding = "{Binding Title}" Width="150"/>
+                    <GridViewColumn Header="Автор" Width="300" DisplayMemberBinding = "{Binding Author}"/>
                     <GridViewColumn Header="Год издания" DisplayMemberBinding="{Binding Year}" Width="150"/>
                     <GridViewColumn Header="Статус" DisplayMemberBinding = "{Binding IsIssued}" Width="150"/>
-                    <GridViewColumn Header="Количество" DisplayMemberBinding = "{Binding Quantity}" Width="150"/>
-                    <GridViewColumn Header="ФИО читателя" DisplayMemberBinding = "{Binding Quantity}" Width="200"/>
+                    <GridViewColumn Header="ФИО читателя" DisplayMemberBinding = "{Binding NameReader}" Width="300"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -66,6 +65,6 @@
         <Label Content="ФИО читателя" HorizontalAlignment="Left" Margin="723,215,0,0" VerticalAlignment="Top" Foreground="#160066"/>
         <TextBox HorizontalAlignment="Left" Margin="660,274,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" 
          Name ="TextBoxNameReader" Background="White" PreviewTextInput="TextBox_PreviewReaderNameInput"/>
-        <Frame x:Name="MainFrame" Source="Authentification.xaml" Margin="0, 0, 0, 0" Grid.Row="1" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated" Content=""/>
+        <Frame x:Name="MainFrame" Source="Authentification.xaml" Margin="0, 0, 0, 0" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
