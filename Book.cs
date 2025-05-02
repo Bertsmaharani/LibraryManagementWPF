@@ -12,8 +12,7 @@ namespace LibraryManagementWPF
         public string Title { get; set; }
         public string Author { get; set; }
         public int Year { get; set; }
-        public int Quantity { get; set; }
         public bool IsIssued { get; set; }
-        public int MaxQuantity { get; set; }
+        public string NameReader { get; set; }
     }
 }

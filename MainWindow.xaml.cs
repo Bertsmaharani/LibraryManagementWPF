@@ -28,31 +28,26 @@ namespace LibraryManagementWPF
             try
             {
                 if (string.IsNullOrEmpty(TextBoxIdBook.Text) || string.IsNullOrEmpty(TextBoxTitle.Text) ||
-                string.IsNullOrEmpty(TextBoxYear.Text) || string.IsNullOrEmpty(TextBoxQuantity.Text) ||
+                string.IsNullOrEmpty(TextBoxYear.Text) || string.IsNullOrEmpty(TextBoxNameReader.Text) ||
                 string.IsNullOrEmpty(TextBoxAuthor.Text) || string.IsNullOrEmpty(ComboBoxStatus.Text))
                 {
                     System.Windows.MessageBox.Show("Все поля должны быть заполнены!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return; 
                 }
-
                 int id = int.Parse(TextBoxIdBook.Text);
                 int year = int.Parse(TextBoxYear.Text);
-                int quantity = int.Parse(TextBoxQuantity.Text);
-
                 Book book = new Book
                 {
                     ID = id,
                     Title = TextBoxTitle.Text,
                     Author = TextBoxAuthor.Text,
                     Year = year,
-                    Quantity = quantity,
                     IsIssued = ComboBoxStatus.Text == "Доступна",
-                    MaxQuantity = quantity
+                    NameReader = TextBoxNameReader.Text
                 };
                 books.Add(book);
                 SaveBooks(); 
                 ClearInputFields();
-
             }
             catch (FormatException ex)
             {
@@ -89,25 +84,19 @@ namespace LibraryManagementWPF
         {
             try
             {
-                if (string.IsNullOrEmpty(TextBoxIdBook.Text) || string.IsNullOrEmpty(TextBoxQuantity.Text))
+                if (string.IsNullOrEmpty(TextBoxIdBook.Text) || string.IsNullOrEmpty(TextBoxNameReader.Text))
                 {
-                    throw new Exception("Поля Id книги и количество обязательны для заполнения!");
+                    throw new Exception("Поля Id книги и ФИО обязательно для заполнения!");
                 }
                 int id = Convert.ToInt32(TextBoxIdBook.Text);
-                int qnt = Convert.ToInt32(TextBoxQuantity.Text);
+                string name = Convert.ToString(TextBoxNameReader.Text);
                 var book = books.FirstOrDefault(b => b.ID == id);
-                if (book != null && book.IsIssued && book.Quantity > qnt)
-                {
-                    book.Quantity -= qnt;
-                    UpdateBookList();
-                }
-                else if(book != null && book.IsIssued && book.Quantity == qnt)
+                if (book != null && book.IsIssued)
                 {
                     book.IsIssued = false;
-                    book.Quantity -= qnt;
                     UpdateBookList();
                 }
-                else if (book == null || !book.IsIssued || book.Quantity < qnt)
+                else if (book == null || !book.IsIssued)
                 {
                     throw new Exception("Книга не доступна для выдачи!");
                 }
@@ -129,20 +118,14 @@ namespace LibraryManagementWPF
                 }
                 int id = Convert.ToInt32(TextBoxIdBook.Text);
                 var book = books.FirstOrDefault(b => b.ID == id);
-                if (book != null && book.IsIssued && book.Quantity > 0 && book.Quantity < book.MaxQuantity)
-                {
-                    book.Quantity++;
-                    UpdateBookList();
-                }
-                else if (book != null && !book.IsIssued && book.Quantity == 0 && book.Quantity < book.MaxQuantity)
+                if (book != null && !book.IsIssued)
                 {
                     book.IsIssued = true;
-                    book.Quantity++;
                     UpdateBookList();
                 }
-                else if(book.Quantity == book.MaxQuantity)
+                else if(book.IsIssued)
                 {
-                    throw new Exception("Книга не может быть вовзращена, потому что достигнуто максимальное количество!");
+                    throw new Exception("Книга не может быть вовзращена, потому что она уже доступна!");
                 }
                 SaveBooks();
                 ClearInputFields();
@@ -176,7 +159,7 @@ namespace LibraryManagementWPF
             TextBoxTitle.Text = string.Empty;
             TextBoxAuthor.Text = string.Empty;
             TextBoxYear.Text = string.Empty;
-            TextBoxQuantity.Text = string.Empty;
+            TextBoxNameReader.Text = string.Empty;
         }
 
         private void ButtonLoadBooks_Click(object sender, RoutedEventArgs e)
@@ -249,9 +232,9 @@ namespace LibraryManagementWPF
             var regex = new Regex("[^0-9]+"); 
             e.Handled = regex.IsMatch(e.Text);
         }
-        private void TextBox_PreviewQntInput(object sender, TextCompositionEventArgs e)
+        private void TextBox_PreviewReaderNameInput(object sender, TextCompositionEventArgs e)
         {
-            var regex = new Regex("[^0-9]+"); 
+            var regex = new Regex("[^а-яА-ЯЁёa-zA-Z]+");
             e.Handled = regex.IsMatch(e.Text);
         }
         private void BookListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -262,6 +245,7 @@ namespace LibraryManagementWPF
                 TextBoxTitle.Text = selectedItem.Title;
                 TextBoxAuthor.Text = selectedItem.Author;
                 TextBoxYear.Text = selectedItem.Year.ToString();
+                TextBoxNameReader.Text = selectedItem.NameReader;   
                 if (selectedItem.IsIssued == true)
                 {
                     ComboBoxStatus.Text = "Доступна";
@@ -270,7 +254,6 @@ namespace LibraryManagementWPF
                 {
                     ComboBoxStatus.Text = "Не доступна";
                 }
-                TextBoxQuantity.Text = selectedItem.Quantity.ToString();
             }
         }
 
@@ -283,7 +266,7 @@ namespace LibraryManagementWPF
                 selectedItem.Author = TextBoxAuthor.Text;
                 selectedItem.Year = Convert.ToInt32(TextBoxYear.Text);
                 selectedItem.IsIssued = Convert.ToBoolean(ComboBoxStatus);
-                selectedItem.Quantity = Convert.ToInt32(TextBoxQuantity.Text);
+                selectedItem.NameReader = TextBoxNameReader.Text;
                 BookListView.Items.Refresh();
             }
         }
