@@ -15,11 +15,8 @@
         <Button Content="Удалить" HorizontalAlignment="Left" Margin="71,158,0,0" VerticalAlignment="Top" 
                 RenderTransformOrigin="-1.174,-0.549" Click="ButtonDeleteBook_Click" Height="30" Width="100" 
                 Foreground="#160066" Background="#d7ccff"/>
-        <Button Content="Выдать" HorizontalAlignment="Left" Margin="71,241,0,0" VerticalAlignment="Top" 
-                RenderTransformOrigin="-1.174,-0.549" Click="ButtonGiveOut_Click" Height="30" Width="100" 
-                Foreground="#160066" Background="#d7ccff"/>
-        <Button Content="Вернуть" HorizontalAlignment="Left" Margin="71,325,0,0" VerticalAlignment="Top" 
-                RenderTransformOrigin="-1.174,-0.549" Click="ButtonReturnBook_Click" Height="30" Width="100" 
+        <Button Content="Выдача/возврат" HorizontalAlignment="Left" Margin="71,241,0,0" VerticalAlignment="Top" 
+                RenderTransformOrigin="-1.174,-0.549" Click="ButtonGiveOut_Click" Height="30" Width="200" 
                 Foreground="#160066" Background="#d7ccff"/>
         <Label Content="Id книги" HorizontalAlignment="Left" Margin="270,67,0,0" VerticalAlignment="Top" Foreground="#160066"/>
         <Label Content="Название" HorizontalAlignment="Left" Margin="510,62,0,0" VerticalAlignment="Top" Foreground="#160066"/>
@@ -55,7 +52,7 @@
                    </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Загрузить данные из файла" HorizontalAlignment="Left" Margin="901,70,0,0" 
+        <Button Content="Выгрузить данные из файла" HorizontalAlignment="Left" Margin="901,70,0,0" 
                 VerticalAlignment="Top" Name ="ButtonLoadBooks" Click="ButtonLoadBooks_Click" 
                 Foreground="#160066" Background="#d7ccff" Height="30"/>
         <Button Content="Сохранить данные в файл" HorizontalAlignment="Left" Margin="901,325,0,0" 
@@ -64,12 +61,7 @@
         <Button Content="Выход" HorizontalAlignment="Left" Margin="1116,10,0,0" 
                 VerticalAlignment="Top" Name ="ButtonExit" Click="ButtonExit_Click" 
                 Foreground="#160066" Background="#d7ccff" Height="30"/>
-        <Button Content="Выбор файла" HorizontalAlignment="Left" Margin="901,158,0,0" VerticalAlignment="Top" 
-            RenderTransformOrigin="-1.174,-0.549" Height="30" Width="214" Click="ButtonSelectFile_Click" 
-            Foreground="#160066" Background="#d7ccff"/>
-        <Button Content="Выбор пути" HorizontalAlignment="Left" Margin="901,241,0,0" VerticalAlignment="Top" 
-    RenderTransformOrigin="-1.174,-0.549" Height="30" Width="214" Click="ButtonSelectPath_Click" 
-    Foreground="#160066" Background="#d7ccff"/>
+       
         <Button Content="Редактировать" HorizontalAlignment="Left" Margin="519,340,0,0" VerticalAlignment="Top" Width="133" Name="ButtonEditBook" Click="ButtonEditBook_Click"/>
         <Frame x:Name="MainFrame" Source="Authentification.xaml" Margin="0, 0, 0, 0" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
